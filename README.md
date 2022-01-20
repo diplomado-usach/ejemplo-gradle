@@ -1,5 +1,4 @@
 # Getting Started
-
 ### Build Code
 * ./gradlew clean build
 
