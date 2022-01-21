@@ -3,7 +3,7 @@ pipeline {
 	stages {
 		stage('Build & Test') {
 			steps {
-				sh './gradle clean build'
+				sh './gradlew clean build'
 			}
 		}
 		stage('Sonar') {
@@ -18,7 +18,7 @@ pipeline {
 		}
 		stage('Run') {
 			steps {
-				sh 'JENKINS_NODE_COOKIE=dontKillMe nohup bash gradle bootRun &'
+				sh 'JENKINS_NODE_COOKIE=dontKillMe nohup bash gradlew bootRun &'
 			}
 		}
 		stage('Nexus') {
