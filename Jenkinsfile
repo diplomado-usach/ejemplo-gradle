@@ -27,7 +27,7 @@ pipeline {
             		[
             		    artifactId: 'DevOpsUsach2020',
             			classifier: '',
-            			file: 'build/DevOpsUsach2020-0.0.1.jar',
+            			file: 'build/libs/DevOpsUsach2020-0.0.1.jar',
             			type: 'jar'
             		]
             	],
