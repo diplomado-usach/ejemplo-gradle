@@ -1,44 +1,21 @@
 pipeline {
 	agent any
+	parameters {
+      choice choices: ['gradle', 'maven'], description: 'indicar herramienta de construccion', name: 'buildTool'
+    }
 	stages {
-		stage('Build & Test') {
+		stage('Pipeline') {
 			steps {
-				sh './gradlew clean build'
+				println params.buildTool
+				if(params.buildTool == "gradle"){
+                def ejecutar = load 'gradle.groovy'
+                ejecutar.call();
+				}else{
+				 def ejecutar = load 'maven.groovy'
+                 ejecutar.call();
+				}
 			}
 		}
-		stage('Sonar') {
-			environment {
-                scannerHome = tool 'SonarQubeScanner'
-            }
-            steps {
-            	withSonarQubeEnv('sonarqube') {
-            		sh '${scannerHome}/bin/sonar-scanner'
-                }
-            }
-		}
-		stage('Run') {
-			steps {
-				sh 'JENKINS_NODE_COOKIE=dontKillMe nohup bash gradlew bootRun &'
-			}
-		}
-		stage('Nexus') {
-			steps {
-            	nexusArtifactUploader artifacts: [
-            		[
-            		    artifactId: 'DevOpsUsach2020',
-            			classifier: '',
-            			file: 'build/libs/DevOpsUsach2020-0.0.1.jar',
-            			type: 'jar'
-            		]
-            	],
-            	credentialsId: 'nexus_local_credentials',
-            	groupId: 'com.devopsusach2020',
-            	nexusUrl: 'localhost:8081',
-            	nexusVersion: 'nexus3',
-            	protocol: 'http',
-            	repository: 'test-repo',
-            	version: '0.0.1'
-            }
-       }
+
 	}
 }
