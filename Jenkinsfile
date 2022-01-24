@@ -25,7 +25,7 @@ pipeline {
                 println "Ricardo Quiroga ${env.JOB_NAME}" + params.buildTool +" Ejecución exitosa."
             }
             failure {
-               println "Ricardo Quiroga ${env.JOB_NAME}" + params.buildTool +" ] Ejecución fallida en stage . ${env.STAGE_NAME}"
+               println "Ricardo Quiroga ${env.JOB_NAME}" + params.buildTool +" ] Ejecución fallida en stage. ${env.STAGE_NAME}"
             }
     }
 }
