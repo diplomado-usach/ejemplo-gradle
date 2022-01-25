@@ -1,9 +1,11 @@
 pipeline {
 	agent any
+	environment{
+        STAGE = ''
+    }
 	parameters {
         choice(name: 'buildTool', choices:['gradle', 'maven'],  description: 'indicar build tools')
     }
-
 	stages {
 		stage('Pipeline') {
 			steps {
@@ -12,9 +14,11 @@ pipeline {
                     if (params.buildTool == 'gradle') {
                         def ejecutar = load 'gradle.groovy'
                         ejecutar.call();
+                        echo env.STAGE
                     } else {
                         def ejecutar = load 'maven.groovy'
                         ejecutar.call();
+                        echo env.STAGE
                     }
                 }
 			}
@@ -26,7 +30,7 @@ pipeline {
                 slackSend (color:"#008000",message: "[Ricardo Quiroga] [${env.JOB_NAME}] [${params.buildTool}] Ejecución exitosa")
             }
             failure {
-               slackSend (color:"#FF0000",message: """[Ricardo Quiroga] [${env.JOB_NAME}] [${params.buildTool}] Ejecución fallida en stage ${env.STAGE_NAME}""")
+               slackSend (color:"#FF0000",message: "[Ricardo Quiroga] [${env.JOB_NAME}] [${params.buildTool}] Ejecución fallida en stage ${env.STAGE}")
             }
     }
 }
