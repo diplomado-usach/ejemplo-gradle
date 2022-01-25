@@ -25,8 +25,8 @@ pipeline {
 
 	}
 	def subject = "[Ricardo Quiroga] '[${env.JOB_NAME}]'"
-	def ok = "${subject} "+ params.buildTool + " Ejecución exitosa"
-	def nook = "${subject} "+ params.buildTool + " Ejecución fallida enn stage ${STAGE}"
+	def ok = "${subject} ".concat(params.buildTool).concat("Ejecución exitosa")
+	def nook = "${subject} ".concat(params.buildTool).concat("Ejecución fallida enn stage ${STAGE}")
 	post {
             success {
                 slackSend (color:'GREEN',message: ok)
