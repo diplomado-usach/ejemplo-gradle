@@ -3,6 +3,10 @@ pipeline {
 	parameters {
         choice(name: 'buildTool', choices:['gradle', 'maven'],  description: 'indicar build tools')
     }
+    environment{
+    STAGE = ''
+    }
+
 	stages {
 		stage('Pipeline') {
 			steps {
@@ -20,12 +24,15 @@ pipeline {
 		}
 
 	}
+	def subject = "[Ricardo Quiroga] '[${env.JOB_NAME}]'"
+	def ok = "${subject} "+ params.buildTool + " Ejecución exitosa"
+	def nook = "${subject} "+ params.buildTool + " Ejecución fallida enn stage ${STAGE}"
 	post {
-            always {
-                println "Ricardo Quiroga ${env.JOB_NAME}" + params.buildTool +" Ejecución exitosa."
+            success {
+                slackSend (color:'GREEN',message: ok)
             }
             failure {
-               println "Ricardo Quiroga ${env.JOB_NAME}" + params.buildTool +" ] Ejecución fallida en stage. ${env.STAGE_NAME}"
+               slackSend (color:'RED',message: nook)
             }
     }
 }
