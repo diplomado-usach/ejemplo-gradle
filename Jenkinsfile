@@ -11,12 +11,13 @@ pipeline {
 			steps {
                 script{
                     println params.buildTool
-                    example = env.STAGE
-                    println "Stage: ${example}"
+
+
                     if (params.buildTool == 'gradle') {
                         def ejecutar = load 'gradle.groovy'
-                        ejecutar.call();
-                        println "Stage2: ${example}"
+                        STAGE = ejecutar.call();
+                        echo env.STAGE
+                        println "Stage2: ${STAGE}"
                     } else {
                         def ejecutar = load 'maven.groovy'
                         ejecutar.call();
