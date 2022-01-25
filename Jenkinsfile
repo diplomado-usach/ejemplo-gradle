@@ -30,7 +30,6 @@ pipeline {
             }
             failure {
                slackSend (color:"#FF0000",message: "[Ricardo Quiroga] [${env.JOB_NAME}] [${params.buildTool}] Ejecución fallida en stage ${STAGE}")
-               println "Stage3: ${example}"
             }
     }
 }
