@@ -14,7 +14,7 @@ pipeline {
                     if (params.buildTool == 'gradle') {
                         def ejecutar = load 'gradle.groovy'
                         ejecutar.call();
-                        last_started = env.STAGE_NAME
+                        last_started = $env.STAGE_NAME
                     } else {
                         def ejecutar = load 'maven.groovy'
                         ejecutar.call();
