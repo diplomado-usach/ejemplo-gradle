@@ -26,10 +26,10 @@ pipeline {
 	}
 	post {
             success {
-                slackSend (color:'GREEN',message: "[Ricardo Quiroga] '[${env.JOB_NAME}]'".concat([${params.buildTool}]).concat("Ejecución exitosa"))
+                slackSend (color:'GREEN',message: "[Ricardo Quiroga] [${env.JOB_NAME}] [${params.buildTool}] Ejecución exitosa")
             }
             failure {
-               slackSend (color:'RED',message: "[Ricardo Quiroga] '[${env.JOB_NAME}]'".concat([${params.buildTool}]).concat("Ejecución fallida enn stage ${STAGE}"))
+               slackSend (color:'RED',message: "[Ricardo Quiroga] [${env.JOB_NAME}] [${params.buildTool}] Ejecución fallida en stage ${STAGE}")
             }
     }
 }
