@@ -1,24 +1,27 @@
-def call() {
-    stage('Build & Test') {
-        env['STAGE'] = "Build & Test"
-        sh './gradlew clean build'
-    }
-    stage('Sonar') {
-        env['STAGE'] = "Sonar"
-        println "Stage: ${env.STAGE_NAME}"
-    }
-    stage('Run') {
-        env['STAGE'] = "Run"
-        println "Stage: ${env.STAGE_NAME}"
-    }
-    stage('Test') {
-        env['STAGE'] = "Test"
-        println "Stage: ${env.STAGE_NAME}"
-    }
-    stage('Nexus') {
-        env['STAGE'] = "Nexus"
-        println "Stage: ${env.STAGE_NAME}"
+class BuildGradlePipeline {
+    def STAGE
+
+    BuildGradlePipeline(script) {
+        stage('Build & Test') {
+            this.STAGE = "Build & Test"
+            sh './gradlew clean build'
+        }
+        stage('Sonar') {
+            this.STAGE = "Sonar"
+            println "Stage: ${script.env.STAGE_NAME}"
+        }
+        stage('Run') {
+            this.STAGE = "Run"
+            println "Stage: ${script.env.STAGE_NAME}"
+        }
+        stage('Test') {
+            this.STAGE = "Test"
+            println "Stage: ${script.env.STAGE_NAME}"
+        }
+        stage('Nexus') {
+            this.STAGE = "Nexus"
+            println "Stage: ${script.env.STAGE_NAME}"
+        }
     }
 }
-
-return this;
+return new BuildGradlePipeline(this);
