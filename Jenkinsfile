@@ -24,15 +24,12 @@ pipeline {
 		}
 
 	}
-	def subject = "[Ricardo Quiroga] '[${env.JOB_NAME}]'"
-	def ok = "${subject} ".concat(params.buildTool).concat("Ejecución exitosa")
-	def nook = "${subject} ".concat(params.buildTool).concat("Ejecución fallida enn stage ${STAGE}")
 	post {
             success {
-                slackSend (color:'GREEN',message: ok)
+                slackSend (color:'GREEN',message: "[Ricardo Quiroga] '[${env.JOB_NAME}]'".concat([${params.buildTool}]).concat("Ejecución exitosa"))
             }
             failure {
-               slackSend (color:'RED',message: nook)
+               slackSend (color:'RED',message: "[Ricardo Quiroga] '[${env.JOB_NAME}]'".concat([${params.buildTool}]).concat("Ejecución fallida enn stage ${STAGE}"))
             }
     }
 }
