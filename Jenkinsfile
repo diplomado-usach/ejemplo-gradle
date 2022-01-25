@@ -11,9 +11,12 @@ pipeline {
 			steps {
                 script{
                     println params.buildTool
+                    example = env.STAGE_NAME
+                    println "Stage: ${example}"
                     if (params.buildTool == 'gradle') {
                         def ejecutar = load 'gradle.groovy'
                         ejecutar.call();
+                        println "Stage2: ${example}"
                     } else {
                         def ejecutar = load 'maven.groovy'
                         ejecutar.call();
@@ -29,7 +32,8 @@ pipeline {
                 slackSend (color:"#008000",message: "[Ricardo Quiroga] [${env.JOB_NAME}] [${params.buildTool}] Ejecución exitosa")
             }
             failure {
-               slackSend (color:"#FF0000",message: "[Ricardo Quiroga] [${env.JOB_NAME}] [${params.buildTool}] Ejecución fallida en stage ${gradle.STAGE}")
+               slackSend (color:"#FF0000",message: "[Ricardo Quiroga] [${env.JOB_NAME}] [${params.buildTool}] Ejecución fallida en stage ${example}")
+               println "Stage3: ${example}"
             }
     }
 }
