@@ -11,7 +11,7 @@ pipeline {
 			steps {
                 script{
                     println params.buildTool
-                    example = env.STAGE_NAME
+                    example = env.STAGE
                     println "Stage: ${example}"
                     if (params.buildTool == 'gradle') {
                         def ejecutar = load 'gradle.groovy'
